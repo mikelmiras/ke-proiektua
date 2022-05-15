@@ -48,7 +48,8 @@ spriteak.o: /home/user/Proiektua/source/spriteak.c \
   /opt/devkitPro/libnds/include/nds/system.h \
   /opt/devkitPro/libnds/include/nds/arm9/decompress.h \
   /home/user/Proiektua/include/spriteak.h \
-  /home/user/Proiektua/include/definizioak.h
+  /home/user/Proiektua/include/definizioak.h \
+  /home/user/Proiektua/include/oztopoak.h
 
 /opt/devkitPro/libnds/include/nds.h:
 
@@ -149,3 +150,5 @@ spriteak.o: /home/user/Proiektua/source/spriteak.c \
 /home/user/Proiektua/include/spriteak.h:
 
 /home/user/Proiektua/include/definizioak.h:
+
+/home/user/Proiektua/include/oztopoak.h:

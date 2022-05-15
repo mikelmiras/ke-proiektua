@@ -15,9 +15,11 @@ adibide batean oinarrituta.
 #include "zerbitzuErrutinak.h"
 #include "fondoak.h"
 #include "oztopoak.h"
-
+#include "spriteak.h"
+int hegazkinX;
+int hegazkinY;
 int denb;
-
+int sprite = 0;
 void jokoa01()
 {	
 	EGOERA=HASIERA;
@@ -28,37 +30,24 @@ void jokoa01()
 													 //komatxoen kanpoan aldagaiaren balioa.
 	iprintf("\x1b[16;0HHegazkina aldatzeko, pantaila ukitu. Jokua hasteko, sakatu START.");
 
-
+	etenZerbErrutEzarri();
 	TekEtenBaimendu();
 	DenbEtenBaimendu();	
 	konfiguratuTenporizadorea(39322, 0x42);
 	konfiguratuTeklatua(0x4001);
+	changePlaneSprite(sprite);
 	ErlojuaMartxanJarri();
-	etenZerbErrutEzarri();
-	//erakutsiAtea();
-	int sprite = 0;
 	while(1)
 	{
 		if (TeklaDetektatu() == 1){
 		int tekla = SakatutakoTekla();
-			if (tekla == START){	
+			if (tekla == START && EGOERA == HASIERA){	
+				hideSprite(0, hegazkinX, hegazkinY);
 				EGOERA = EGUNA;
-				ErlojuaMartxanJarri();
+				switchBG(0);
 			}	
 		}
-		if (EGOERA == HASIERA) {
-			
-			touchPosition pos;
-			touchRead(&pos);
-			if (pos.px != 0 && pos.py != 0){
-				changePlaneSprite(sprite); //Funtzio honek spritearen itxura aldatzen du. Funtzio hau spriteak.h-n dago.
-				if (sprite < 3)
-					sprite++;
-				else
-					sprite = 0;
-			}
-			iprintf("\x1b[22;5HSpriteak: %d", sprite);
-		}
+		
 //		if (EGOERA == EGUNA){
 //			jokuaHasi();
 //		}

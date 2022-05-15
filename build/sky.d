@@ -1,0 +1,1 @@
+sky.o: sky.s

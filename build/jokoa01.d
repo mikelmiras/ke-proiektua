@@ -51,7 +51,8 @@ jokoa01.o: /home/user/Proiektua/source/jokoa01.c \
   /home/user/Proiektua/include/periferikoak.h \
   /home/user/Proiektua/include/zerbitzuErrutinak.h \
   /home/user/Proiektua/include/fondoak.h \
-  /home/user/Proiektua/include/oztopoak.h
+  /home/user/Proiektua/include/oztopoak.h \
+  /home/user/Proiektua/include/spriteak.h
 
 /opt/devkitPro/libnds/include/nds.h:
 
@@ -158,3 +159,5 @@ jokoa01.o: /home/user/Proiektua/source/jokoa01.c \
 /home/user/Proiektua/include/fondoak.h:
 
 /home/user/Proiektua/include/oztopoak.h:
+
+/home/user/Proiektua/include/spriteak.h:

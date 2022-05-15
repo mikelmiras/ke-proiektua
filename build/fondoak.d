@@ -49,8 +49,7 @@ fondoak.o: /home/user/Proiektua/source/fondoak.c \
   /opt/devkitPro/libnds/include/nds/arm9/decompress.h \
   /home/user/Proiektua/include/fondoak.h \
   /home/user/Proiektua/include/grafikoak.h \
-  /home/user/Proiektua/build/Atea.h \
-  /home/user/Proiektua/build/AteaIrekita.h
+  /home/user/Proiektua/build/sky.h
 
 /opt/devkitPro/libnds/include/nds.h:
 
@@ -152,6 +151,4 @@ fondoak.o: /home/user/Proiektua/source/fondoak.c \
 
 /home/user/Proiektua/include/grafikoak.h:
 
-/home/user/Proiektua/build/Atea.h:
-
-/home/user/Proiektua/build/AteaIrekita.h:
+/home/user/Proiektua/build/sky.h:

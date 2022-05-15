@@ -8,16 +8,15 @@ periferikoak.c
 #include "periferikoak.h"
 #include "fondoak.h"
 #include "spriteak.h"
+#include "jokoa01.h"
 
 int EGOERA;
-int seg3;
-
+int counter_3s; //Aldagai honek 3s neurtzeko erabiltzen da. Etenak	
+int sprite;
 void tekEten ()
-{
-	if (EGOERA == HASIERA && SakatutakoTekla() == START)
-	{
-   		EGOERA = EGUNA;
-	}
+{	
+	iprintf("\x1b[11;0HSakatutako tekla: %d", SakatutakoTekla());
+	iprintf("\x1b[10;0HEgoera: %d", EGOERA);
 	if ((EGOERA == EGUNA || EGOERA == GAUA) && SakatutakoTekla() == SELECT){
 		EGOERA = PAUSA;			
 	}
@@ -25,15 +24,25 @@ void tekEten ()
 
 void tenpEten()
 {
-	static int tik=0;
-	static int seg=0;
+	if (EGOERA != HASIERA && EGOERA!=PAUSA){
+	//Denboragailua bakarrik jokuan gauden bitartean funtzionatuko du.
+	counter_3s++;	
+	}
+	if (EGOERA == HASIERA) {
+			touchPosition pos;
+			touchRead(&pos);
+			if (pos.px != 0 && pos.py != 0){
+				if (sprite < 2)
+					sprite++;
+				else
+					sprite = 0;				
+				changePlaneSprite(sprite); //Funtzio honek spritearen itxura aldatzen du. Funtzio hau spriteak.h-n dago.
+				
+			}
+		}
 	
 
-if (EGOERA!=HASIERA && EGOERA != BUKAERA && EGOERA != PAUSA)
-{
-	tik++; 
-	
-}
+
 }
 void etenZerbErrutEzarri()
 {

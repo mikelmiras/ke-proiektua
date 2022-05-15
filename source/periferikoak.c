@@ -81,7 +81,7 @@ void DenbEtenBaimendu()
 //Horretarako lehenengo eten guztiak galarazi eta bukaeran berriro baimendu
 	IME=0;
 	// HEMEN IDATZI BEHAR DUZUE ZUEN KODEA
-	IE |= (0X1<<2);
+	IE |= (0X1<<3);
 	IME=1;
 }
 
@@ -92,7 +92,7 @@ void DenbEtenGalarazi()
 //Horretarako lehenengo eten guztiak galarazi eta bukaeran berriro baimendu
 	IME=0;
 	// HEMEN IDATZI BEHAR DUZUE ZUEN KODEA
-	IE &= ~(0X1<<2);
+	IE &= ~(0X1<<3);
 	IME=1;
 
 }
@@ -100,12 +100,12 @@ void DenbEtenGalarazi()
 void ErlojuaMartxanJarri()
 {
 	// HEMEN IDATZI BEHAR DUZUE ZUEN KODEA
-	DENB0_KNT |= (0X1<<6);
+	DENB0_KNT |= (0X1<<7);
 	
 }
 
 void ErlojuaGelditu()
 {
 	// HEMEN IDATZI BEHAR DUZUE ZUEN KODEA
-	DENB0_KNT &= ~(0X1<<6);
+	DENB0_KNT &= ~(0X1<<7);
 }

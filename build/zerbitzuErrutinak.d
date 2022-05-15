@@ -50,7 +50,8 @@ zerbitzuErrutinak.o: /home/user/Proiektua/source/zerbitzuErrutinak.c \
   /home/user/Proiektua/include/definizioak.h \
   /home/user/Proiektua/include/periferikoak.h \
   /home/user/Proiektua/include/fondoak.h \
-  /home/user/Proiektua/include/spriteak.h
+  /home/user/Proiektua/include/spriteak.h \
+  /home/user/Proiektua/include/jokoa01.h
 
 /opt/devkitPro/libnds/include/nds.h:
 
@@ -155,3 +156,5 @@ zerbitzuErrutinak.o: /home/user/Proiektua/source/zerbitzuErrutinak.c \
 /home/user/Proiektua/include/fondoak.h:
 
 /home/user/Proiektua/include/spriteak.h:
+
+/home/user/Proiektua/include/jokoa01.h:
