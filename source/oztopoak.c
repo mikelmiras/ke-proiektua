@@ -18,7 +18,7 @@ int cloudIds[] = {1, 2, 3, 4};
 int randomArray[] = {0, 1,0,2, 1, 0, 1, 2, 2, 2,1,0, 2,1,0,0,1,0,1,0,2,0,1,2,1,1,1,0,2,1};
 int choques = 0;
 void spawnClouds(){
- int i;
+int i;
 int pos = 0;
 for (i = 0; i < 4; i++){
  updateCloudPos(i, posX[i], posY[i]);
