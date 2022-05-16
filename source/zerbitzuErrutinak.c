@@ -9,7 +9,6 @@ periferikoak.c
 #include "fondoak.h"
 #include "spriteak.h"
 #include "jokoa01.h"
-
 int EGOERA;
 int counter_3s; //Aldagai honek 3s neurtzeko erabiltzen da. Etenak	
 int sprite;
@@ -25,6 +24,7 @@ void tekEten ()
 	if(EGOERA == EGUNA || EGOERA == GAUA){
 		if (SakatutakoTekla() == EZKER && hegazkinX != 27){
 			int i;
+			
 			for(i = 0; i < 17; i++) 
 			{
 			hideSprite(0, hegazkinX, hegazkinY);
@@ -41,6 +41,7 @@ void tekEten ()
 			updateSpritePosition(0, hegazkinX, hegazkinY);			
 			}
 		}
+		
 	}
 	
 }

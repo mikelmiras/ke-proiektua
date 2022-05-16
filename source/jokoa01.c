@@ -23,12 +23,6 @@ int sprite = 0;
 void jokoa01()
 {	
 	EGOERA=HASIERA;
-	
-	
-	iprintf("\x1b[13;0HOngi etorri jure jokura.");	//Honek, 13 lerroan eta 0 zutabean testua idatziko du.
-													//Aldagai baten idatzi nahi izanez gero, %d komatxoen barruan eta 
-													 //komatxoen kanpoan aldagaiaren balioa.
-	iprintf("\x1b[16;0HHegazkina aldatzeko, pantaila ukitu. Jokua hasteko, sakatu START.");
 
 	etenZerbErrutEzarri();
 	TekEtenBaimendu();
@@ -54,7 +48,7 @@ void jokoa01()
 }
 
 void jokuaHasi(){
-hegazkinX = 197;
+hegazkinX = 112;
 hegazkinY = 160;
 updateSpritePosition(0, hegazkinX, hegazkinY);
 spawnClouds();
