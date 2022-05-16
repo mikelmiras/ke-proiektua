@@ -34,3 +34,5 @@ extern void changePlaneSprite(int id);
 extern void updateSpritePosition(int id, int x, int y);
 extern void updatePlanePosition(int x, int y);
 extern void hideSprite(int id, int x, int y);
+extern void updateCloudPos(int id, int x, int y);
+extern void hideCloud(int id, int x, int y);

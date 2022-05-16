@@ -13,20 +13,51 @@ periferikoak.c
 int EGOERA;
 int counter_3s; //Aldagai honek 3s neurtzeko erabiltzen da. Etenak	
 int sprite;
+int segunduak = 0;
+int counter = 0;
+int hegazkinX;
+int hegazkinY;
 void tekEten ()
 {	
-	iprintf("\x1b[11;0HSakatutako tekla: %d", SakatutakoTekla());
-	iprintf("\x1b[10;0HEgoera: %d", EGOERA);
 	if ((EGOERA == EGUNA || EGOERA == GAUA) && SakatutakoTekla() == SELECT){
 		EGOERA = PAUSA;			
 	}
+	if(EGOERA == EGUNA || EGOERA == GAUA){
+		if (SakatutakoTekla() == EZKER && hegazkinX != 27){
+			int i;
+			for(i = 0; i < 17; i++) 
+			{
+			hideSprite(0, hegazkinX, hegazkinY);
+			hegazkinX -= 5;
+			updateSpritePosition(0, hegazkinX, hegazkinY);			
+			}
+		}
+		if (SakatutakoTekla() == ESKUBI && hegazkinX != 197){
+			int i;
+			for(i = 0; i < 17; i++) 
+			{
+			hideSprite(0, hegazkinX, hegazkinY);
+			hegazkinX += 5;
+			updateSpritePosition(0, hegazkinX, hegazkinY);			
+			}
+		}
+	}
+	
 }
 
 void tenpEten()
 {
 	if (EGOERA != HASIERA && EGOERA!=PAUSA){
 	//Denboragailua bakarrik jokuan gauden bitartean funtzionatuko du.
-	counter_3s++;	
+	counter_3s++;
+	counter++;
+	iprintf("\x1b[22;0HDenbora: %d", segunduak);
+	moveClouds(counter);
+		if (counter_3s == 5){
+			segunduak++;
+			//iprintf("\x1b[24;0HDenbora: %d", segunduak);
+			counter_3s = 0;
+		}	
 	}
 	if (EGOERA == HASIERA) {
 			touchPosition pos;

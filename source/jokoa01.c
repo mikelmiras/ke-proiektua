@@ -34,7 +34,7 @@ void jokoa01()
 	TekEtenBaimendu();
 	DenbEtenBaimendu();	
 	konfiguratuTenporizadorea(39322, 0x42);
-	konfiguratuTeklatua(0x4001);
+	konfiguratuTeklatua(0x403D);
 	changePlaneSprite(sprite);
 	ErlojuaMartxanJarri();
 	while(1)
@@ -45,12 +45,18 @@ void jokoa01()
 				hideSprite(0, hegazkinX, hegazkinY);
 				EGOERA = EGUNA;
 				switchBG(0);
+				jokuaHasi();
 			}	
 		}
 		
-//		if (EGOERA == EGUNA){
-//			jokuaHasi();
-//		}
 			
 	}
+}
+
+void jokuaHasi(){
+hegazkinX = 197;
+hegazkinY = 160;
+updateSpritePosition(0, hegazkinX, hegazkinY);
+spawnClouds();
+
 }

@@ -12,26 +12,21 @@ adibide batean oinarrituta.
 #include "oztopoak.h"
 int hegazkinX;
 int hegazkinY;
-u16* gfxerronbo;
-u16* gfxerronboHandia;
-
-u16* gfxhegazkin1;
-u16* gfxhegazkin2;
-u16* gfxhegazkin3;
 
 u16* currentPlane;
+u16* gfxHodeia;
 
-u16* gfxerrombo;
 
 
 /* Pantailan erakutsi nahi den sprite bakoitzeko memoria erreserbatu.*/
 void memoriaErreserbatu()
 {
 	/* Pantaila nagusian gehitu nahi den sprite bakoitzarentzako horrelako bat egin behar da. */
-	gfxerronbo= oamAllocateGfx(&oamMain, SpriteSize_16x16, SpriteColorFormat_256Color);
-	gfxerronboHandia=oamAllocateGfx(&oamMain, SpriteSize_32x32, SpriteColorFormat_256Color);
-	gfxhegazkin1 = oamAllocateGfx(&oamMain, SpriteSize_16x16,SpriteColorFormat_256Color);
-	currentPlane = oamAllocateGfx(&oamMain, SpriteSize_16x16,SpriteColorFormat_256Color);
+	currentPlane = oamAllocateGfx(&oamMain, SpriteSize_32x32,SpriteColorFormat_256Color);
+	gfxHodeia = oamAllocateGfx(&oamMain, SpriteSize_32x32,SpriteColorFormat_256Color);
+	//gfxHodeia2 = oamAllocateGfx(&oamMain, SpriteSize_32x32, SpriteColorFormat_256Color);
+	//gfxHodeia3 = oamAllocateGfx(&oamMain, SpriteSize_32x32, SpriteColorFormat_256Color);	
+	//gfxHodeia4 = oamAllocateGfx(&oamMain, SpriteSize_32x32, SpriteColorFormat_256Color);
 }
 
 /* Pixel bakoitzak har ditzakeen 256 balioetako bakoitzari kolore bat esleitu PANTAILA NAGUSIAN. 0 balioa gardena da 
@@ -92,7 +87,10 @@ SPRITE_PALETTE[48] = RGB15(31,0,0);
 SPRITE_PALETTE[49] = RGB15(8,9,11);
 SPRITE_PALETTE[50] = RGB15(16,16,21);
 SPRITE_PALETTE[51] = RGB15(2,2,2);
-
+//Hodeia:
+SPRITE_PALETTE[52] = RGB15(4,4,4);
+SPRITE_PALETTE[53] = RGB15(31,31,31);
+SPRITE_PALETTE[54] = RGB15(0,16,31);
 
 }
 
@@ -102,32 +100,14 @@ SPRITE_PALETTE[51] = RGB15(2,2,2);
    hurrengo lauak beheko ezkerreko koadrantean eta azkeneko lauak beheko ezkerreko koadrantean. 
    Alboko irudian ikusten den bezala. */
 
-u8 erronbo[256] = 
-{
-	0,0,0,0,0,0,2,2,0,0,0,0,0,2,2,2,	//	0,0,0,0,0,0,2,2, 2,2,0,0,0,0,0,0,
-	0,0,0,0,2,2,2,2,0,0,0,2,2,2,2,2,	//	0,0,0,0,0,2,2,2, 2,2,2,0,0,0,0,0,
-	0,0,2,2,2,2,2,2,0,2,2,2,2,2,2,2,	//	0,0,0,0,2,2,2,2, 2,2,2,2,0,0,0,0,
-	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,	//	0,0,0,2,2,2,2,2, 2,2,2,2,2,0,0,0,
- 
-	2,2,0,0,0,0,0,0,2,2,2,0,0,0,0,0,	//	0,0,2,2,2,2,2,2, 2,2,2,2,2,2,0,0,
-	2,2,2,2,0,0,0,0,2,2,2,2,2,0,0,0,	//	0,2,2,2,2,2,2,2, 2,2,2,2,2,2,2,0,
-	2,2,2,2,2,2,0,0,2,2,2,2,2,2,2,0,	//	2,2,2,2,2,2,2,2, 2,2,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,	//	2,2,2,2,2,2,2,2, 2,2,2,2,2,2,2,2,
 
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,	//	1,1,1,1,1,1,1,1, 1,1,1,1,1,1,1,1,
-	0,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,	//	1,1,1,1,1,1,1,1, 1,1,1,1,1,1,1,1,
-	0,0,0,1,1,1,1,1,0,0,0,0,1,1,1,1,	//	0,1,1,1,1,1,1,1, 1,1,1,1,1,1,1,0,
-	0,0,0,0,0,1,1,1,0,0,0,0,0,0,1,1,	//	0,0,1,1,1,1,1,1, 1,1,1,1,1,1,0,0,
-
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,	//	0,0,0,1,1,1,1,1, 1,1,1,1,1,0,0,0,
-	1,1,1,1,1,1,1,0,1,1,1,1,1,1,0,0,	//	0,0,0,0,1,1,1,1, 1,1,1,1,0,0,0,0,
-	1,1,1,1,1,0,0,0,1,1,1,1,0,0,0,0,	//	0,0,0,0,0,1,1,1, 1,1,1,0,0,0,0,0,
-	1,1,1,0,0,0,0,0,1,1,0,0,0,0,0,0,	//	0,0,0,0,0,0,1,1, 1,1,0,0,0,0,0,0,
+u8 hodeia[1024] = {
+0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 52, 52, 52, 0, 0, 0, 0, 52, 52, 53, 53, 0, 0, 52, 52, 52, 53, 53, 53, 0, 0, 52, 53, 53, 53, 53, 53, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 52, 52, 52, 0, 0, 0, 0, 0, 53, 53, 52, 52, 0, 0, 0, 0, 53, 53, 53, 52, 0, 0, 0, 0, 53, 53, 53, 52, 52, 52, 52, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 52, 52, 52, 52, 0, 0, 0, 0, 52, 53, 53, 53, 0, 0, 0, 52, 53, 53, 53, 53, 52, 52, 52, 53, 53, 53, 53, 53, 0, 0, 52, 53, 53, 53, 53, 53, 0, 0, 52, 53, 53, 53, 53, 53, 52, 52, 53, 53, 53, 53, 53, 53, 52, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 52, 52, 53, 53, 53, 53, 53, 53, 53, 52, 53, 53, 53, 53, 53, 53, 53, 52, 53, 53, 53, 53, 53, 53, 53, 52, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 52, 0, 0, 0, 0, 0, 0, 0, 52, 0, 52, 52, 52, 0, 0, 0, 52, 52, 53, 53, 52, 0, 0, 0, 53, 53, 53, 53, 52, 52, 0, 0, 53, 53, 53, 53, 52, 53, 52, 0, 52, 53, 53, 53, 53, 53, 53, 53, 52, 53, 53, 53, 53, 53, 53, 53, 52, 53, 53, 53, 53, 53, 53, 53, 0, 52, 53, 53, 53, 53, 53, 53, 0, 0, 52, 53, 53, 53, 53, 53, 0, 0, 0, 52, 53, 53, 53, 53, 0, 0, 0, 0, 52, 53, 53, 53, 0, 0, 0, 0, 52, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 54, 53, 53, 53, 53, 53, 53, 53, 53, 54, 53, 53, 53, 54, 54, 53, 53, 53, 53, 54, 54, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 54, 53, 53, 53, 53, 53, 53, 53, 53, 54, 53, 53, 53, 53, 53, 53, 53, 53, 54, 54, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 52, 0, 53, 53, 53, 53, 53, 53, 52, 0, 53, 53, 53, 53, 53, 53, 52, 0, 53, 53, 53, 53, 53, 52, 0, 0, 53, 53, 53, 53, 53, 52, 0, 0, 53, 53, 53, 53, 53, 53, 52, 0, 53, 53, 53, 53, 53, 53, 52, 0, 53, 53, 53, 53, 53, 52, 0, 0, 0, 0, 0, 0, 0, 52, 52, 52, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 53, 53, 53, 53, 53, 53, 53, 53, 52, 53, 53, 53, 53, 53, 53, 52, 0, 52, 52, 53, 53, 53, 52, 52, 0, 0, 0, 52, 52, 52, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 52, 52, 53, 53, 53, 53, 53, 52, 0, 0, 52, 52, 52, 52, 52, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 53, 53, 53, 53, 52, 0, 0, 0, 53, 53, 52, 52, 0, 0, 0, 0, 52, 52, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 };
 
 u8 plane1[1024] = {
 
-	1024,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,2,3,0,0,0,0,0,0,1,4,0,0,0,0,0,0,1,4,0,0,0,0,0,0,1,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,3,1,0,0,0,0,0,0,4,5,0,0,0,0,0,0,6,4,0,0,0,0,0,0,7,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,8,8,8,8,8,0,0,1,8,8,8,8,6,0,0,1,4,8,8,8,6,0,0,0,1,4,4,8,8,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8,8,1,1,1,1,1,1,8,8,8,8,8,8,8,4,8,8,6,6,6,6,8,4,8,8,6,6,6,6,8,4,8,8,8,8,8,8,8,4,8,8,4,4,4,4,4,4,4,4,0,0,1,1,4,4,4,4,8,8,0,0,0,0,0,0,8,8,9,1,1,1,1,1,8,8,4,8,8,8,8,8,8,8,4,8,6,6,6,6,8,8,4,10,6,6,6,6,8,8,4,4,8,8,4,4,4,4,4,4,4,4,4,1,4,4,4,4,1,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,0,0,8,8,8,8,8,8,11,0,6,8,8,8,8,4,1,0,6,12,8,8,4,1,0,0,4,4,4,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,13,1,4,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,1,1,8,4,4,1,0,0,0,0,0,4,4,0,0,0,0,0,0,3,14,0,0,0,0,0,0,15,3,0,0,0,0,0,0,16,1,0,0,0,0,0,0,17,18,0,0,0,0,0,0,19,20,0,0,0,0,0,0,8,8,21,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,8,8,8,8,0,0,0,1,4,4,4,22,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,8,8,8,8,4,0,0,23,22,4,4,4,4,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,2,3,0,0,0,0,0,0,1,4,0,0,0,0,0,0,1,4,0,0,0,0,0,0,1,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,3,1,0,0,0,0,0,0,4,5,0,0,0,0,0,0,6,4,0,0,0,0,0,0,7,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,8,8,8,8,8,0,0,1,8,8,8,8,6,0,0,1,4,8,8,8,6,0,0,0,1,4,4,8,8,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8,8,1,1,1,1,1,1,8,8,8,8,8,8,8,4,8,8,6,6,6,6,8,4,8,8,6,6,6,6,8,4,8,8,8,8,8,8,8,4,8,8,4,4,4,4,4,4,4,4,0,0,1,1,4,4,4,4,8,8,0,0,0,0,0,0,8,8,9,1,1,1,1,1,8,8,4,8,8,8,8,8,8,8,4,8,6,6,6,6,8,8,4,10,6,6,6,6,8,8,4,4,8,8,4,4,4,4,4,4,4,4,4,1,4,4,4,4,1,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,0,0,8,8,8,8,8,8,11,0,6,8,8,8,8,4,1,0,6,12,8,8,4,1,0,0,4,4,4,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,13,1,4,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,1,1,8,4,4,1,0,0,0,0,0,4,4,0,0,0,0,0,0,3,14,0,0,0,0,0,0,15,3,0,0,0,0,0,0,16,1,0,0,0,0,0,0,17,18,0,0,0,0,0,0,19,20,0,0,0,0,0,0,8,8,21,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,8,8,8,8,0,0,0,1,4,4,4,22,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,8,8,8,8,4,0,0,23,22,4,4,4,4,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 
 };
 
@@ -151,7 +131,7 @@ int i;
 	//16*16ko spriteentzako
 	for(i = 0; i < 16 * 16 / 2; i++) 
 	{	
-		gfxerronbo[i] = erronbo[i*2] | (erronbo[(i*2)+1]<<8);	
+		
 	//	gfxhegazkin1[i] = plane1[i*2] | (plane1[(i*2)+1]<<8);			
 	//	switch(id){
 	//	case 0:
@@ -178,100 +158,22 @@ int i;
 		break;
 		case 2:
 		currentPlane[i] = plane3[i*2] | (plane3[(i*2)+1]<<8);
+		break;
 		default:
 		currentPlane[i] = plane3[i*2] | (plane3[(i*2)+1]<<8);
-		}				
+		}
+		gfxHodeia[i] = hodeia[i*2] | (hodeia[(i*2)+1]<<8);
 	}
 }
 
 /* Funtzio honek erronbo bat irudikatuko dut pantailako x-y posizioan. Pantailan ateratzea nahi den erronbo 
    bakoitzari indize desberdin bat esleitu behar zaio, 0 eta 126 balioen arteko indizea izan daiteke. */
 
-void ErakutsiErronboa(int indizea, int x, int y)
-{ 
- 
-oamSet(&oamMain, //main graphics engine context
-		indizea,           //oam index (0 to 127)  
-		x, y,   //x and y pixle location of the sprite
-		0,                    //priority, lower renders last (on top)
-		0,					  //this is the palette index if multiple palettes or the alpha value if bmp sprite	
-		SpriteSize_16x16,     
-		SpriteColorFormat_256Color, 
-		gfxerronbo,//+16*16/2,                  //pointer to the loaded graphics
-		-1,                  //sprite rotation data  
-		false,               //double the size when rotating?
-		false,			//hide the sprite?
-		false, false, //vflip, hflip
-		false	//apply mosaic
-		); 
-	  
-oamUpdate(&oamMain);  
-}
 
-/*Funtzio honek erronbo baten indizea pasata pantailatik ezabatzen du*/
-void EzabatuErronboa(int indizea, int x, int y)
-{
 
-oamSet(&oamMain, //main graphics engine context
-		indizea,           //oam index (0 to 127)  
-		x, y,   //x and y pixle location of the sprite
-		0,                    //priority, lower renders last (on top)
-		0,					  //this is the palette index if multiple palettes or the alpha value if bmp sprite	
-		SpriteSize_16x16,     
-		SpriteColorFormat_256Color, 
-		gfxerronbo,//+16*16/2,                  //pointer to the loaded graphics
-		-1,                  //sprite rotation data  
-		false,               //double the size when rotating?
-		true,			//hide the sprite?
-		false, false, //vflip, hflip
-		false	//apply mosaic
-		); 
-oamUpdate(&oamMain); 
 
-}
 
-void ErakutsiErronboHandia(int indizea, int x, int y)
-{ 
- 
-oamSet(&oamMain, //main graphics engine context
-		indizea,           //oam index (0 to 127)  
-		x, y,   //x and y pixle location of the sprite
-		0,                    //priority, lower renders last (on top)
-		0,					  //this is the palette index if multiple palettes or the alpha value if bmp sprite	
-		SpriteSize_32x32,     
-		SpriteColorFormat_256Color, 
-		gfxerronboHandia,//+16*16/2,                  //pointer to the loaded graphics
-		-1,                  //sprite rotation data  
-		false,               //double the size when rotating?
-		false,			//hide the sprite?
-		false, false, //vflip, hflip
-		false	//apply mosaic
-		); 
 
-	  
-oamUpdate(&oamMain);  
-}
-
-void EzabatuErronboHandia(int indizea, int x, int y)
-{
-
-oamSet(&oamMain, //main graphics engine context
-		indizea,           //oam index (0 to 127)  
-		x, y,   //x and y pixle location of the sprite
-		0,                    //priority, lower renders last (on top)
-		0,					  //this is the palette index if multiple palettes or the alpha value if bmp sprite	
-		SpriteSize_32x32,     
-		SpriteColorFormat_256Color, 
-		gfxerronboHandia,//+16*16/2,                  //pointer to the loaded graphics
-		-1,                  //sprite rotation data  
-		false,               //double the size when rotating?	
-		true,			//hide the sprite?
-		false, false, //vflip, hflip
-		false	//apply mosaic
-		); 
-oamUpdate(&oamMain); 
-
-}
 
 
 void changePlaneSprite(int id){
@@ -330,6 +232,184 @@ void updatePlanePosition(int x, int y){
 updateSpritePosition(0, x, y);
 }
 
+void 	updateCloudPos(int id, int x, int y){
+	switch(id){
+	case 0:
+	oamSet(&oamMain, //main graphics engine context
+		1,           //oam index (0 to 127)  
+		x, y,   //x and y pixle location of the sprite
+		10,                    //priority, lower renders last (on top)
+		0,					  //this is the palette index if multiple palettes or the alpha value if bmp sprite	
+		SpriteSize_32x32,     
+		SpriteColorFormat_256Color, 
+		gfxHodeia,//+16*16/2,                  //pointer to the loaded graphics
+		1,                  //sprite rotation data  
+		false,               //double the size when rotating?
+		false,			//hide the sprite?
+		false, false, //vflip, hflip
+		false	//apply mosaic
+		); 
+	oamUpdate(&oamMain); 
+	break;
+	case 1:
+	oamSet(&oamMain, //main graphics engine context
+		2,           //oam index (0 to 127)  
+		x, y,   //x and y pixle location of the sprite
+		10,                    //priority, lower renders last (on top)
+		0,					  //this is the palette index if multiple palettes or the alpha value if bmp sprite	
+		SpriteSize_32x32,     
+		SpriteColorFormat_256Color, 
+		gfxHodeia,//+16*16/2,                  //pointer to the loaded graphics
+		1,                  //sprite rotation data  
+		false,               //double the size when rotating?
+		false,			//hide the sprite?
+		false, false, //vflip, hflip
+		false	//apply mosaic
+		); 
+oamUpdate(&oamMain); 
+break;
+case 2:
+	oamSet(&oamMain, //main graphics engine context
+		3,           //oam index (0 to 127)  
+		x, y,   //x and y pixle location of the sprite
+		10,                    //priority, lower renders last (on top)
+		0,					  //this is the palette index if multiple palettes or the alpha value if bmp sprite	
+		SpriteSize_32x32,     
+		SpriteColorFormat_256Color, 
+		gfxHodeia,//+16*16/2,                  //pointer to the loaded graphics
+		1,                  //sprite rotation data  
+		false,               //double the size when rotating?
+		false,			//hide the sprite?
+		false, false, //vflip, hflip
+		false	//apply mosaic
+		); 
+oamUpdate(&oamMain); 
+	break;
+case 3:
+oamSet(&oamMain, //main graphics engine context
+		4,           //oam index (0 to 127)  
+		x, y,   //x and y pixle location of the sprite
+		10,                    //priority, lower renders last (on top)
+		0,					  //this is the palette index if multiple palettes or the alpha value if bmp sprite	
+		SpriteSize_32x32,     
+		SpriteColorFormat_256Color, 
+		gfxHodeia,//+16*16/2,                  //pointer to the loaded graphics
+		1,                  //sprite rotation data  
+		false,               //double the size when rotating?
+		false,			//hide the sprite?
+		false, false, //vflip, hflip
+		false	//apply mosaic
+		); 
+oamUpdate(&oamMain);
+break; 
+default:
+oamSet(&oamMain, //main graphics engine context
+		1,           //oam index (0 to 127)  
+		x, y,   //x and y pixle location of the sprite
+		10,                    //priority, lower renders last (on top)
+		0,					  //this is the palette index if multiple palettes or the alpha value if bmp sprite	
+		SpriteSize_32x32,     
+		SpriteColorFormat_256Color, 
+		gfxHodeia,//+16*16/2,                  //pointer to the loaded graphics
+		1,                  //sprite rotation data  
+		false,               //double the size when rotating?
+		false,			//hide the sprite?
+		false, false, //vflip, hflip
+		false	//apply mosaic
+		); 
+oamUpdate(&oamMain); 
+	}
+
+}
+void hideCloud(int id, int x, int y){
+	switch(id){
+	case 0:
+	oamSet(&oamMain, //main graphics engine context
+		1,           //oam index (0 to 127)  
+		x, y,   //x and y pixle location of the sprite
+		10,                    //priority, lower renders last (on top)
+		0,					  //this is the palette index if multiple palettes or the alpha value if bmp sprite	
+		SpriteSize_32x32,     
+		SpriteColorFormat_256Color, 
+		gfxHodeia,//+16*16/2,                  //pointer to the loaded graphics
+		1,                  //sprite rotation data  
+		false,               //double the size when rotating?
+		true,			//hide the sprite?
+		false, false, //vflip, hflip
+		false	//apply mosaic
+		); 
+	oamUpdate(&oamMain); 
+	break;
+	case 1:
+	oamSet(&oamMain, //main graphics engine context
+		2,           //oam index (0 to 127)  
+		x, y,   //x and y pixle location of the sprite
+		10,                    //priority, lower renders last (on top)
+		0,					  //this is the palette index if multiple palettes or the alpha value if bmp sprite	
+		SpriteSize_32x32,     
+		SpriteColorFormat_256Color, 
+		gfxHodeia,//+16*16/2,                  //pointer to the loaded graphics
+		1,                  //sprite rotation data  
+		false,               //double the size when rotating?
+		false,			//hide the sprite?
+		false, false, //vflip, hflip
+		false	//apply mosaic
+		); 
+oamUpdate(&oamMain); 
+break;
+case 2:
+	oamSet(&oamMain, //main graphics engine context
+		3,           //oam index (0 to 127)  
+		x, y,   //x and y pixle location of the sprite
+		10,                    //priority, lower renders last (on top)
+		0,					  //this is the palette index if multiple palettes or the alpha value if bmp sprite	
+		SpriteSize_32x32,     
+		SpriteColorFormat_256Color, 
+		gfxHodeia,//+16*16/2,                  //pointer to the loaded graphics
+		1,                  //sprite rotation data  
+		false,               //double the size when rotating?
+		true,			//hide the sprite?
+		false, false, //vflip, hflip
+		false	//apply mosaic
+		); 
+oamUpdate(&oamMain); 
+	break;
+case 3:
+oamSet(&oamMain, //main graphics engine context
+		4,           //oam index (0 to 127)  
+		x, y,   //x and y pixle location of the sprite
+		10,                    //priority, lower renders last (on top)
+		0,					  //this is the palette index if multiple palettes or the alpha value if bmp sprite	
+		SpriteSize_32x32,     
+		SpriteColorFormat_256Color, 
+		gfxHodeia,//+16*16/2,                  //pointer to the loaded graphics
+		1,                  //sprite rotation data  
+		false,               //double the size when rotating?
+		false,			//hide the sprite?
+		false, false, //vflip, hflip
+		false	//apply mosaic
+		); 
+oamUpdate(&oamMain);
+break; 
+default:
+oamSet(&oamMain, //main graphics engine context
+		4,           //oam index (0 to 127)  
+		x, y,   //x and y pixle location of the sprite
+		10,                    //priority, lower renders last (on top)
+		0,					  //this is the palette index if multiple palettes or the alpha value if bmp sprite	
+		SpriteSize_32x32,     
+		SpriteColorFormat_256Color, 
+		gfxHodeia,//+16*16/2,                  //pointer to the loaded graphics
+		1,                  //sprite rotation data  
+		false,               //double the size when rotating?
+		false,			//hide the sprite?
+		false, false, //vflip, hflip
+		false	//apply mosaic
+		); 
+oamUpdate(&oamMain); 
+	}
+
+}
 
 
 
