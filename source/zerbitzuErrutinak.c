@@ -4,42 +4,55 @@ periferikoak.c
 
 #include <nds.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include "definizioak.h"
 #include "periferikoak.h"
 #include "fondoak.h"
 #include "spriteak.h"
 #include "jokoa01.h"
-int EGOERA;
-int counter_3s; //Aldagai honek 3s neurtzeko erabiltzen da. Etenak	
+int counter_1s; //Aldagai honek 3s neurtzeko erabiltzen da. Etenak	
 int sprite;
 int segunduak = 0;
 int counter = 0;
 int hegazkinX;
 int hegazkinY;
+EGOERA;
+
+int borrar = 0;
 void tekEten ()
-{	
-	if ((EGOERA == EGUNA || EGOERA == GAUA) && SakatutakoTekla() == SELECT){
-		EGOERA = PAUSA;			
-	}
-	if(EGOERA == EGUNA || EGOERA == GAUA){
+{
+			int tekla = SakatutakoTekla();
+
+			if (tekla == SELECT){
+				if (EGOERA == EGUNA || EGOERA == GAUA){
+				ErlojuaGelditu();
+				EGOERA = PAUSA;
+				hideSprite(0, hegazkinX, hegazkinY);
+				iprintf("\x1b[7:0HPresionado: %d", borrar);
+				borrar++;
+				hideClouds();
+				}else{
+					if (EGOERA == PAUSA){
+						iprintf("\x1b[6;0HMartxan berriz");
+				displayClouds();
+				updatePlanePosition(hegazkinX, hegazkinY);
+				EGOERA = EGUNA;
+				ErlojuaMartxanJarri();
+					}				
+				}
+			}	
+		if(EGOERA == EGUNA || EGOERA == GAUA){
 		if (SakatutakoTekla() == EZKER && hegazkinX != 27){
-			int i;
-			
-			for(i = 0; i < 17; i++) 
-			{
 			hideSprite(0, hegazkinX, hegazkinY);
-			hegazkinX -= 5;
+			hegazkinX -= 85;
 			updateSpritePosition(0, hegazkinX, hegazkinY);			
-			}
 		}
 		if (SakatutakoTekla() == ESKUBI && hegazkinX != 197){
 			int i;
-			for(i = 0; i < 17; i++) 
-			{
 			hideSprite(0, hegazkinX, hegazkinY);
-			hegazkinX += 5;
+			hegazkinX += 85;
 			updateSpritePosition(0, hegazkinX, hegazkinY);			
-			}
+			
 		}
 		
 	}
@@ -48,17 +61,21 @@ void tekEten ()
 
 void tenpEten()
 {
-	if (EGOERA != HASIERA && EGOERA!=PAUSA){
+
+	if (EGOERA == EGUNA || EGOERA == GAUA){
 	//Denboragailua bakarrik jokuan gauden bitartean funtzionatuko du.
-	counter_3s++;
+	counter_1s++;
 	counter++;
 	iprintf("\x1b[22;0HDenbora: %d", segunduak);
 	moveClouds(counter);
-		if (counter_3s == 5){
+		if (counter_1s == 5){
 			segunduak++;
-			//iprintf("\x1b[24;0HDenbora: %d", segunduak);
-			counter_3s = 0;
+			counter_1s = 0;
 		}	
+		if (EGOERA == EGUNA && segunduak >= 60){
+				EGOERA = GAUA;	
+				switchBG(1); //Gaueko fondoa jarri	
+		}
 	}
 	if (EGOERA == HASIERA) {
 			touchPosition pos;

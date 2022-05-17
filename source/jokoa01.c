@@ -20,6 +20,9 @@ int hegazkinX;
 int hegazkinY;
 int denb;
 int sprite = 0;
+
+int segunduak;
+
 void jokoa01()
 {	
 	EGOERA=HASIERA;
@@ -40,7 +43,9 @@ void jokoa01()
 				EGOERA = EGUNA;
 				switchBG(0);
 				jokuaHasi();
-			}	
+			}
+			
+			
 		}
 		
 			
@@ -52,5 +57,7 @@ hegazkinX = 112;
 hegazkinY = 160;
 updateSpritePosition(0, hegazkinX, hegazkinY);
 spawnClouds();
-
 }
+
+
+

@@ -3,3 +3,4 @@ jokoa01
 ---------------------------------------------------------------------------------*/
 void jokoa01();
 extern int sprite;
+extern void egoeraAldatu(int n);

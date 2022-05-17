@@ -27,6 +27,7 @@ void switchBG(int n){
                      skyBitmap, /* Automatikoki sortzen den aldagaia */
                      (uint16 *)BG_BMP_RAM(0), /* Fondo nagusiaren helbidea */
                      skyBitmapLen);
+	break;
 	default:
 	dmaCopyHalfWords(DMA_CHANNEL,
                      skyBitmap, /* Automatikoki sortzen den aldagaia */

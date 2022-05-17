@@ -20,7 +20,7 @@ int randomArray[] = {0, 1,0,2, 1, 0, 1, 2, 1, 2,1,0, 2,1,0,0,1,0,1,0,2,0,1,2,1,1
 void spawnClouds(){
 int i;
 int pos = 0;
-for (i = 2; i < 3; i++){
+for (i = 0; i < 4; i++){
  updateCloudPos(i, posX[i], posY[i]);
 }
 }
@@ -28,8 +28,8 @@ for (i = 2; i < 3; i++){
 void moveClouds(int frequency){
  	int i;
 	
-	for (i = 2; i < 3; i++){
-		if ((posX[i] == hegazkinX) && (posY[i] == 160 || posY[i] == 161 || posY[i] == 162)){
+	for (i = 0; i < 4; i++){
+		if ((posX[i] == hegazkinX) && (posY[i] == 160 || posY[i] == 161 || posY[i] == 162 || posY[i] == 163 || posY[i] == 164)){
 			choques++;
 			iprintf("\x1b[05;0HTalka egin duzu: %d", choques);
 	
@@ -41,7 +41,7 @@ void moveClouds(int frequency){
 		if (posY[i] > 192){
 			int variable = randomArray[counter_rand];
 			posY[i] = spawnsY[variable];
-			abiadura[i] = 4 + (4*(variable));
+			abiadura[i] = 4 + (4*(variable) % 6);
 			switch(variable){
 				case 0:
 					posX[i] = 27;
@@ -64,6 +64,19 @@ void moveClouds(int frequency){
 		
 	}
 
+}
+
+void hideClouds(){
+	int i;
+	for (i = 0; i < 4; i++){
+		hideSprite(i + 1, posX[i], posY[i]);
+	}
+}
+void displayClouds(){
+	int i;
+	for (i = 0; i < 4; i++){
+		updateCloudPos(i + 1, posX[i], posY[i]);
+	}
 }
 int random(int max) {
     srand((unsigned) time(NULL));

@@ -6,3 +6,5 @@ extern int posY[];
 
 extern void spawnClouds();
 extern void moveClouds(int frequency);
+extern void hideClouds();
+extern void displayClouds();
