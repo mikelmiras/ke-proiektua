@@ -1,4 +1,4 @@
-fondoak.o: /home/user/Proiektua/source/fondoak.c \
+goiko_fondoa.o: /home/user/Proiektua/source/goiko_fondoa.c \
   /opt/devkitPro/libnds/include/nds.h \
   /opt/devkitPro/libnds/include/nds/libversion.h \
   /opt/devkitPro/libnds/include/nds/ndstypes.h \
@@ -47,11 +47,7 @@ fondoak.o: /home/user/Proiektua/source/fondoak.c \
   /opt/devkitPro/libnds/include/nds/arm9/sprite.h \
   /opt/devkitPro/libnds/include/nds/system.h \
   /opt/devkitPro/libnds/include/nds/arm9/decompress.h \
-  /home/user/Proiektua/include/fondoak.h \
-  /home/user/Proiektua/include/grafikoak.h \
-  /home/user/Proiektua/build/sky.h /home/user/Proiektua/build/PAUSA.h \
-  /home/user/Proiektua/build/hasiera.h /home/user/Proiektua/build/night.h \
-  /home/user/Proiektua/build/BUKAERA.h
+  /home/user/Proiektua/build/PAUSA.h
 
 /opt/devkitPro/libnds/include/nds.h:
 
@@ -149,16 +145,4 @@ fondoak.o: /home/user/Proiektua/source/fondoak.c \
 
 /opt/devkitPro/libnds/include/nds/arm9/decompress.h:
 
-/home/user/Proiektua/include/fondoak.h:
-
-/home/user/Proiektua/include/grafikoak.h:
-
-/home/user/Proiektua/build/sky.h:
-
 /home/user/Proiektua/build/PAUSA.h:
-
-/home/user/Proiektua/build/hasiera.h:
-
-/home/user/Proiektua/build/night.h:
-
-/home/user/Proiektua/build/BUKAERA.h:

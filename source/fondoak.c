@@ -14,6 +14,10 @@ automatikoki sortzen dira, konpilatzerako garaian, baina horretarako gogoratu be
 #include "fondoak.h"
 #include "grafikoak.h"
 #include "sky.h"
+#include "PAUSA.h"
+#include "hasiera.h"
+#include "night.h"
+#include "BUKAERA.h"
 /* irudiak memorian kopiatzeko DMA kanala aukeratu (3.a) */
 static const int DMA_CHANNEL = 3;
 
@@ -28,6 +32,33 @@ void switchBG(int n){
                      (uint16 *)BG_BMP_RAM(0), /* Fondo nagusiaren helbidea */
                      skyBitmapLen);
 	break;
+	case 1:
+		dmaCopyHalfWords(DMA_CHANNEL,
+                     nightBitmap, /* Automatikoki sortzen den aldagaia */
+                     (uint16 *)BG_BMP_RAM(0), /* Fondo nagusiaren helbidea */
+                     nightBitmapLen);
+	break;
+	case 2:
+	dmaCopyHalfWords(DMA_CHANNEL,
+                     PAUSABitmap, /* Automatikoki sortzen den aldagaia */
+                     (uint16 *)BG_BMP_RAM(0), /* Fondo nagusiaren helbidea */
+                     PAUSABitmapLen);
+	
+	break;
+	case 3:
+	dmaCopyHalfWords(DMA_CHANNEL,
+                     hasieraBitmap, /* Automatikoki sortzen den aldagaia */
+                     (uint16 *)BG_BMP_RAM(0), /* Fondo nagusiaren helbidea */
+                     hasieraBitmapLen);
+	
+	break;
+	case 4:
+	dmaCopyHalfWords(DMA_CHANNEL,
+                     BUKAERABitmap, /* Automatikoki sortzen den aldagaia */
+                     (uint16 *)BG_BMP_RAM(0), /* Fondo nagusiaren helbidea */
+                    BUKAERABitmapLen);
+	
+	break;
 	default:
 	dmaCopyHalfWords(DMA_CHANNEL,
                      skyBitmap, /* Automatikoki sortzen den aldagaia */
@@ -35,4 +66,5 @@ void switchBG(int n){
                      skyBitmapLen);
 	
 	}
+	
 }

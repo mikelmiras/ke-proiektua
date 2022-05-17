@@ -32,12 +32,20 @@ void tekEten ()
 				}
 				EGOERA = PAUSA;
 				hideSprite(0, hegazkinX, hegazkinY);
+				switchBG(2);
 				hideClouds();
 				}else{
 					if (EGOERA == PAUSA){
 				displayClouds();
 				updatePlanePosition(hegazkinX, hegazkinY);
-				EGOERA = EGUNA;
+				
+				if (segunduak > 60){
+					EGOERA = GAUA;
+					switchBG(1);				
+				}else{
+					EGOERA = EGUNA;
+					switchBG(0);					
+				}
 				ErlojuaMartxanJarri();
 				int i;
 				for (i = talkak + 5; i < 8; i++){
@@ -61,6 +69,20 @@ void tekEten ()
 		}
 		
 	}
+	if (SakatutakoTekla() == A && EGOERA == BUKAERA){
+	iprintf("\x1b[2J");
+	EGOERA=HASIERA;
+	switchBG(3);
+	TekEtenBaimendu();
+	DenbEtenBaimendu();	
+	konfiguratuTenporizadorea(61167, 0x42);
+	konfiguratuTeklatua(0x403D);
+	ErlojuaMartxanJarri();
+	changePlaneSprite(0);
+	centerSprite(0);
+	hegazkinX = 112;
+	hegazkinY = 80;	
+	}
 	
 }
 
@@ -73,11 +95,11 @@ void tenpEten()
 	counter++;
 	iprintf("\x1b[22;0HDenbora: %d", segunduak);
 	moveClouds(counter);
-		if (counter_1s == 5){
+		if (counter_1s == 30){
 			segunduak++;
 			counter_1s = 0;
 		}	
-		if (EGOERA == EGUNA && segunduak >= 60){
+		if (EGOERA == EGUNA && segunduak >= 40){
 				EGOERA = GAUA;	
 				switchBG(1); //Gaueko fondoa jarri	
 		}
@@ -97,6 +119,11 @@ void tenpEten()
 	
 
 
+}
+void resetTimer(){
+segunduak = 0;
+counter = 0;
+counter_1s = 0;
 }
 void etenZerbErrutEzarri()
 {

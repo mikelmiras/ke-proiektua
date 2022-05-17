@@ -27,25 +27,25 @@ int segunduak;
 void jokoa01()
 {	
 	EGOERA=HASIERA;
-
+	switchBG(3);
 	etenZerbErrutEzarri();
 	TekEtenBaimendu();
 	DenbEtenBaimendu();	
-	konfiguratuTenporizadorea(39322, 0x42);
+	konfiguratuTenporizadorea(61167, 0x42);
 	konfiguratuTeklatua(0x403D);
-	changePlaneSprite(sprite);
 	ErlojuaMartxanJarri();
+	changePlaneSprite(sprite);
 	while(1)
 	{
 		if (TeklaDetektatu() == 1){
 		int tekla = SakatutakoTekla();
-			if (tekla == START && EGOERA == HASIERA){	
+			if (tekla == START && EGOERA == HASIERA){
+				iprintf("\x1b[05:00HThis working");	
 				hideSprite(0, hegazkinX, hegazkinY);
 				EGOERA = EGUNA;
 				switchBG(0);
 				jokuaHasi();
-			}
-			
+			}	
 			
 		}
 		
@@ -53,7 +53,10 @@ void jokoa01()
 	}
 }
 
+
 void jokuaHasi(){
+DenbEtenBaimendu();	
+ErlojuaMartxanJarri();
 hegazkinX = 112;
 hegazkinY = 160;
 updateSpritePosition(0, hegazkinX, hegazkinY);

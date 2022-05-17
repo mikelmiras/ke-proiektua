@@ -1,0 +1,1 @@
+PAUSA.o: PAUSA.s

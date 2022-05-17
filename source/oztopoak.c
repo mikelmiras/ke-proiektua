@@ -10,7 +10,7 @@ int hegazkinY = 80;
 int counter_rand = 0;
 int posY[] = {-32, -32, -66, -34};
 int posX[] = {27, 112, 197, 27};
-int abiadura[] = {4, 6, 4, 9};
+int abiadura[] = {1, 3, 2, 3};
 int spawnsX[] = {27, 112, 197};
 int spawnsY[] = {-32, -64, -64};
 int repetition_counter = 0;
@@ -29,9 +29,9 @@ void moveClouds(int frequency){
  	int i;
 	
 	for (i = 0; i < 4; i++){
-		if ((posX[i] == hegazkinX) && (posY[i] == 160 || posY[i] == 161 || posY[i] == 162 || posY[i] == 163 || posY[i] == 164)){
+		if ((posX[i] == hegazkinX) && (posY[i] == 160)){
 			talkak++;
-			iprintf("\x1b[05;0HTalka egin duzu: %d", talkak);
+			
 			switch (talkak){
 				case 1:
 				kenduBihotza(5);
@@ -40,12 +40,22 @@ void moveClouds(int frequency){
 				kenduBihotza(6);
 				break;
 				case 3:	
-				kenduBihotza(7);	
+				kenduBihotza(7);
 				EGOERA = BUKAERA;
+				DenbEtenGalarazi(); //Works
+				resetCloudstoSpawn();//Works
+				talkak = 0;
+				counter_rand = 0;
+				i = 0;
+				switchBG(4); //Works
+				hideSprite(0, 112, 80); //Works
+				resetTimer();
+				return;
 				break;				
 			}
 	
 		}
+		if (talkak == 3){ return; }
 		hideCloud(i, posX[i], posY[i]);
 		posY[i] += abiadura[i];
 		updateCloudPos(i, posX[i], posY[i]);
@@ -53,7 +63,7 @@ void moveClouds(int frequency){
 		if (posY[i] > 192){
 			int variable = randomArray[counter_rand];
 			posY[i] = spawnsY[variable];
-			abiadura[i] = 4 + (4*(variable) % 6);
+			abiadura[i] = 2 + (3*(variable) % 3);
 			switch(variable){
 				case 0:
 					posX[i] = 27;
@@ -81,6 +91,16 @@ void moveClouds(int frequency){
 void hideClouds(){
 	int i;
 	for (i = 0; i < 4; i++){
+		hideSprite(i + 1, posX[i], posY[i]);
+	}
+}
+void resetCloudstoSpawn(){
+	int i;
+	int Y[] = {-32, -32, -66, -34};
+	int X[] = {27, 112, 197, 27};
+	for (i = 0; i < 4; i++){
+		posX[i] = X[i];
+		posY[i] = Y[i];
 		hideSprite(i + 1, posX[i], posY[i]);
 	}
 }
