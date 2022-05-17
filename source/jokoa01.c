@@ -39,8 +39,7 @@ void jokoa01()
 	{
 		if (TeklaDetektatu() == 1){
 		int tekla = SakatutakoTekla();
-			if (tekla == START && EGOERA == HASIERA){
-				iprintf("\x1b[05:00HThis working");	
+			if (tekla == START && EGOERA == HASIERA){	
 				hideSprite(0, hegazkinX, hegazkinY);
 				EGOERA = EGUNA;
 				switchBG(0);
