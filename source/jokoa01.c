@@ -20,7 +20,8 @@ int hegazkinX;
 int hegazkinY;
 int denb;
 int sprite = 0;
-
+int bihotzakX[] = {196, 213, 230};
+int bihotzakY = 1;
 int segunduak;
 
 void jokoa01()
@@ -57,6 +58,10 @@ hegazkinX = 112;
 hegazkinY = 160;
 updateSpritePosition(0, hegazkinX, hegazkinY);
 spawnClouds();
+int i;
+for (i = 0; i < 3; i++){
+erakutsiBihotza(i + 5, bihotzakX[i], bihotzakY);
+}
 }
 
 

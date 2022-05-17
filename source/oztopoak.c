@@ -14,7 +14,7 @@ int abiadura[] = {4, 6, 4, 9};
 int spawnsX[] = {27, 112, 197};
 int spawnsY[] = {-32, -64, -64};
 int repetition_counter = 0;
-int choques = 0;
+int talkak = 0;
 int cloudIds[] = {1, 2, 3, 4};
 int randomArray[] = {0, 1,0,2, 1, 0, 1, 2, 1, 2,1,0, 2,1,0,0,1,0,1,0,2,0,1,2,1,1,2,0,2,1};
 void spawnClouds(){
@@ -30,8 +30,20 @@ void moveClouds(int frequency){
 	
 	for (i = 0; i < 4; i++){
 		if ((posX[i] == hegazkinX) && (posY[i] == 160 || posY[i] == 161 || posY[i] == 162 || posY[i] == 163 || posY[i] == 164)){
-			choques++;
-			iprintf("\x1b[05;0HTalka egin duzu: %d", choques);
+			talkak++;
+			iprintf("\x1b[05;0HTalka egin duzu: %d", talkak);
+			switch (talkak){
+				case 1:
+				kenduBihotza(5);
+				break;
+				case 2:
+				kenduBihotza(6);
+				break;
+				case 3:	
+				kenduBihotza(7);	
+				EGOERA = BUKAERA;
+				break;				
+			}
 	
 		}
 		hideCloud(i, posX[i], posY[i]);

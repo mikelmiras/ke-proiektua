@@ -17,8 +17,8 @@ int counter = 0;
 int hegazkinX;
 int hegazkinY;
 EGOERA;
-
-int borrar = 0;
+int talkak;
+int bihotzakX[];
 void tekEten ()
 {
 			int tekla = SakatutakoTekla();
@@ -26,18 +26,23 @@ void tekEten ()
 			if (tekla == SELECT){
 				if (EGOERA == EGUNA || EGOERA == GAUA){
 				ErlojuaGelditu();
+				int i;
+				for (i = 5; i < 8; i++){
+					kenduBihotza(i);				
+				}
 				EGOERA = PAUSA;
 				hideSprite(0, hegazkinX, hegazkinY);
-				iprintf("\x1b[7:0HPresionado: %d", borrar);
-				borrar++;
 				hideClouds();
 				}else{
 					if (EGOERA == PAUSA){
-						iprintf("\x1b[6;0HMartxan berriz");
 				displayClouds();
 				updatePlanePosition(hegazkinX, hegazkinY);
 				EGOERA = EGUNA;
 				ErlojuaMartxanJarri();
+				int i;
+				for (i = talkak + 5; i < 8; i++){
+					erakutsiBihotza(i, bihotzakX[i - 5], 1);				
+				}
 					}				
 				}
 			}	
