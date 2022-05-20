@@ -36,6 +36,11 @@ void jokoa01()
 	konfiguratuTeklatua(0x403D);
 	ErlojuaMartxanJarri();
 	changePlaneSprite(sprite); //Hegazkinari defektuzko itxura jarri: 0 itxura
+	iprintf("\x1b[5;0HEgileak: Mikel Miras, Naroa Iparraguirre eta Jon Mugica");
+	iprintf("\x1b[9;0HKontrolak: Aukeratu hegazkina pantaila ukituz.");
+	iprintf("\x1b[11;0H<R> eta <L>: Mugitu");
+	iprintf("\x1b[12;0H<START> Hasi jokua");
+	iprintf("\x1b[13;0H<SELECT> Pausa");
 	while(1)
 	{
 

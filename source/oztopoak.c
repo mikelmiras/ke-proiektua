@@ -122,6 +122,6 @@ void displayClouds(){
 	//Funtzio honek hodei guztiak aldi berean erakusten ditu.
 	int i;
 	for (i = 0; i < 4; i++){
-		updateCloudPos(i + 1, posX[i], posY[i]);
+		updateCloudPos(i, posX[i], posY[i]);
 	}
 }

@@ -120,6 +120,11 @@ void pausaMenua(){
 }
 void berrizJokatu(){
 	iprintf("\x1b[2J");
+	iprintf("\x1b[5;0HEgileak: Mikel Miras, Naroa Iparraguirre eta Jon Mugica");
+	iprintf("\x1b[9;0HKontrolak: Aukeratu hegazkina pantaila ukituz.");
+	iprintf("\x1b[11;0H<R> eta <L>: Mugitu");
+	iprintf("\x1b[12;0H<START> Hasi jokua");
+	iprintf("\x1b[13;0H<SELECT> Pausa");
 	EGOERA=HASIERA;
 	switchBG(3);
 	TekEtenBaimendu();
