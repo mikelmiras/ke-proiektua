@@ -23,7 +23,7 @@ static const int DMA_CHANNEL = 3;
 
 /* Pantailaratu nahi den grafiko bakoitzerako horrelako prozedura bat idatzi behar da */
 
-
+//Fondoa aldatzen du, n balioaren arabera fondo bat edo beste bat jartzen du.
 void switchBG(int n){
 	switch(n){
 	case 0:

@@ -182,7 +182,7 @@ int i;
 
 
 
-void changePlaneSprite(int id){
+void changePlaneSprite(int id){ //Hegazkinaren itxura aldatzen du.
 SpriteakMemorianGorde(id);
 oamSet(&oamMain, //main graphics engine context
 		0,           //oam index (0 to 127)  
@@ -200,7 +200,8 @@ oamSet(&oamMain, //main graphics engine context
 		); 
 oamUpdate(&oamMain); 
 }
-void updateSpritePosition(int id, int x, int y){
+void updateSpritePosition(int id, int x, int y){ //Emandako spritearen posizioa aldatuko luke, izan
+//ere bakarrik hegazkinarentzat funtziona daiteke grafikoen erakusleagatik (currentPlane).
 oamSet(&oamMain, //main graphics engine context
 		id,           //oam index (0 to 127)  
 		x, y,   //x and y pixle location of the sprite
@@ -218,6 +219,7 @@ oamSet(&oamMain, //main graphics engine context
 oamUpdate(&oamMain); 
 }
 void hideSprite(int id, int x, int y){
+	//Emandako spritea ezkutatzen du.
 oamSet(&oamMain, //main graphics engine context
 		id,           //oam index (0 to 127)  
 		x, y,   //x and y pixle location of the sprite
@@ -234,15 +236,14 @@ oamSet(&oamMain, //main graphics engine context
 		); 
 oamUpdate(&oamMain); 
 }
-void updatePlanePosition(int x, int y){
+void updatePlanePosition(int x, int y){ //Hegazkinaren posizioa aldatzen du.
 updateSpritePosition(0, x, y);
 }
 
-void 	updateCloudPos(int id, int x, int y){
-	switch(id){
-	case 0:
+void updateCloudPos(int id, int x, int y){
+	//Emandako hodeiaren posizioa eguneratzen du
 	oamSet(&oamMain, //main graphics engine context
-		1,           //oam index (0 to 127)  
+		id + 1,           //oam index (0 to 127)  
 		x, y,   //x and y pixle location of the sprite
 		10,                    //priority, lower renders last (on top)
 		0,					  //this is the palette index if multiple palettes or the alpha value if bmp sprite	
@@ -256,82 +257,11 @@ void 	updateCloudPos(int id, int x, int y){
 		false	//apply mosaic
 		); 
 	oamUpdate(&oamMain); 
-	break;
-	case 1:
-	oamSet(&oamMain, //main graphics engine context
-		2,           //oam index (0 to 127)  
-		x, y,   //x and y pixle location of the sprite
-		10,                    //priority, lower renders last (on top)
-		0,					  //this is the palette index if multiple palettes or the alpha value if bmp sprite	
-		SpriteSize_32x32,     
-		SpriteColorFormat_256Color, 
-		gfxHodeia,//+16*16/2,                  //pointer to the loaded graphics
-		1,                  //sprite rotation data  
-		false,               //double the size when rotating?
-		false,			//hide the sprite?
-		false, false, //vflip, hflip
-		false	//apply mosaic
-		); 
-oamUpdate(&oamMain); 
-break;
-case 2:
-	oamSet(&oamMain, //main graphics engine context
-		3,           //oam index (0 to 127)  
-		x, y,   //x and y pixle location of the sprite
-		10,                    //priority, lower renders last (on top)
-		0,					  //this is the palette index if multiple palettes or the alpha value if bmp sprite	
-		SpriteSize_32x32,     
-		SpriteColorFormat_256Color, 
-		gfxHodeia,//+16*16/2,                  //pointer to the loaded graphics
-		1,                  //sprite rotation data  
-		false,               //double the size when rotating?
-		false,			//hide the sprite?
-		false, false, //vflip, hflip
-		false	//apply mosaic
-		); 
-oamUpdate(&oamMain); 
-	break;
-case 3:
-oamSet(&oamMain, //main graphics engine context
-		4,           //oam index (0 to 127)  
-		x, y,   //x and y pixle location of the sprite
-		10,                    //priority, lower renders last (on top)
-		0,					  //this is the palette index if multiple palettes or the alpha value if bmp sprite	
-		SpriteSize_32x32,     
-		SpriteColorFormat_256Color, 
-		gfxHodeia,//+16*16/2,                  //pointer to the loaded graphics
-		1,                  //sprite rotation data  
-		false,               //double the size when rotating?
-		false,			//hide the sprite?
-		false, false, //vflip, hflip
-		false	//apply mosaic
-		); 
-oamUpdate(&oamMain);
-break; 
-default:
-oamSet(&oamMain, //main graphics engine context
-		1,           //oam index (0 to 127)  
-		x, y,   //x and y pixle location of the sprite
-		10,                    //priority, lower renders last (on top)
-		0,					  //this is the palette index if multiple palettes or the alpha value if bmp sprite	
-		SpriteSize_32x32,     
-		SpriteColorFormat_256Color, 
-		gfxHodeia,//+16*16/2,                  //pointer to the loaded graphics
-		1,                  //sprite rotation data  
-		false,               //double the size when rotating?
-		false,			//hide the sprite?
-		false, false, //vflip, hflip
-		false	//apply mosaic
-		); 
-oamUpdate(&oamMain); 
-	}
-
 }
 void hideCloud(int id, int x, int y){
-	switch(id){
-	case 0:
+	//Emandako hodeia ezkutatzen du.
 	oamSet(&oamMain, //main graphics engine context
-		1,           //oam index (0 to 127)  
+		id + 1,           //oam index (0 to 127)  
 		x, y,   //x and y pixle location of the sprite
 		10,                    //priority, lower renders last (on top)
 		0,					  //this is the palette index if multiple palettes or the alpha value if bmp sprite	
@@ -345,79 +275,10 @@ void hideCloud(int id, int x, int y){
 		false	//apply mosaic
 		); 
 	oamUpdate(&oamMain); 
-	break;
-	case 1:
-	oamSet(&oamMain, //main graphics engine context
-		2,           //oam index (0 to 127)  
-		x, y,   //x and y pixle location of the sprite
-		10,                    //priority, lower renders last (on top)
-		0,					  //this is the palette index if multiple palettes or the alpha value if bmp sprite	
-		SpriteSize_32x32,     
-		SpriteColorFormat_256Color, 
-		gfxHodeia,//+16*16/2,                  //pointer to the loaded graphics
-		1,                  //sprite rotation data  
-		false,               //double the size when rotating?
-		false,			//hide the sprite?
-		false, false, //vflip, hflip
-		false	//apply mosaic
-		); 
-oamUpdate(&oamMain); 
-break;
-case 2:
-	oamSet(&oamMain, //main graphics engine context
-		3,           //oam index (0 to 127)  
-		x, y,   //x and y pixle location of the sprite
-		10,                    //priority, lower renders last (on top)
-		0,					  //this is the palette index if multiple palettes or the alpha value if bmp sprite	
-		SpriteSize_32x32,     
-		SpriteColorFormat_256Color, 
-		gfxHodeia,//+16*16/2,                  //pointer to the loaded graphics
-		1,                  //sprite rotation data  
-		false,               //double the size when rotating?
-		true,			//hide the sprite?
-		false, false, //vflip, hflip
-		false	//apply mosaic
-		); 
-oamUpdate(&oamMain); 
-	break;
-case 3:
-oamSet(&oamMain, //main graphics engine context
-		4,           //oam index (0 to 127)  
-		x, y,   //x and y pixle location of the sprite
-		10,                    //priority, lower renders last (on top)
-		0,					  //this is the palette index if multiple palettes or the alpha value if bmp sprite	
-		SpriteSize_32x32,     
-		SpriteColorFormat_256Color, 
-		gfxHodeia,//+16*16/2,                  //pointer to the loaded graphics
-		1,                  //sprite rotation data  
-		false,               //double the size when rotating?
-		false,			//hide the sprite?
-		false, false, //vflip, hflip
-		false	//apply mosaic
-		); 
-oamUpdate(&oamMain);
-break; 
-default:
-oamSet(&oamMain, //main graphics engine context
-		4,           //oam index (0 to 127)  
-		x, y,   //x and y pixle location of the sprite
-		10,                    //priority, lower renders last (on top)
-		0,					  //this is the palette index if multiple palettes or the alpha value if bmp sprite	
-		SpriteSize_32x32,     
-		SpriteColorFormat_256Color, 
-		gfxHodeia,//+16*16/2,                  //pointer to the loaded graphics
-		1,                  //sprite rotation data  
-		false,               //double the size when rotating?
-		false,			//hide the sprite?
-		false, false, //vflip, hflip
-		false	//apply mosaic
-		); 
-oamUpdate(&oamMain); 
-	}
-
 }
 
 void erakutsiBihotza(int id, int x, int y){
+	//Emandako bihotza pantailan sortzen du
 oamSet(&oamMain, //main graphics engine context
 		id,           //oam index (0 to 127)  
 		x, y,   //x and y pixle location of the sprite
@@ -435,6 +296,7 @@ oamSet(&oamMain, //main graphics engine context
 oamUpdate(&oamMain); 
 }
 void kenduBihotza(int id){
+	//Emandako bihotza ezabatzen du.
 oamSet(&oamMain, //main graphics engine context
 		id,           //oam index (0 to 127)  
 		0, 0,   //x and y pixle location of the sprite
@@ -452,6 +314,8 @@ oamSet(&oamMain, //main graphics engine context
 oamUpdate(&oamMain); 
 }
 void centerSprite(int id){
+	//Emandako spritea pantaila erdian jartzen du. Bakarrik hegazkinarentzat balio du, 
+	//grafikoen erakusleagatik.
 oamSet(&oamMain, //main graphics engine context
 		id,           //oam index (0 to 127)  
 		112, 80,   //x and y pixle location of the sprite

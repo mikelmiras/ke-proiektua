@@ -25,7 +25,8 @@ int bihotzakY = 1;
 int segunduak;
 
 void jokoa01()
-{	
+{	//egoera hasierara ezarri, hasiera fondoa jarri, eten taula konfiguratu, baimendu etenak
+	//erlojua martxan jarri
 	EGOERA=HASIERA;
 	switchBG(3);
 	etenZerbErrutEzarri();
@@ -34,16 +35,18 @@ void jokoa01()
 	konfiguratuTenporizadorea(61167, 0x42);
 	konfiguratuTeklatua(0x403D);
 	ErlojuaMartxanJarri();
-	changePlaneSprite(sprite);
+	changePlaneSprite(sprite); //Hegazkinari defektuzko itxura jarri: 0 itxura
 	while(1)
 	{
+
+		//Inkesta bidez detektatu ea <START> sakatu den HASIERAn gauden bitartean, jokua hasieratzeko.
 		if (TeklaDetektatu() == 1){
 		int tekla = SakatutakoTekla();
 			if (tekla == START && EGOERA == HASIERA){	
-				hideSprite(0, hegazkinX, hegazkinY);
-				EGOERA = EGUNA;
-				switchBG(0);
-				jokuaHasi();
+				hideSprite(0, hegazkinX, hegazkinY); //Hegazkina pantaila erditik kendu
+				EGOERA = EGUNA; //Egoera aldatu
+				switchBG(0); //Jokuaren fondoa jarri
+				jokuaHasi(); //Jokua hasieratzen duen funtzioa deitu
 			}	
 			
 		}
@@ -54,13 +57,14 @@ void jokoa01()
 
 
 void jokuaHasi(){
-DenbEtenBaimendu();	
-ErlojuaMartxanJarri();
-hegazkinX = 112;
+DenbEtenBaimendu();	//Denboragailua baimendu
+ErlojuaMartxanJarri(); //Denboragailua hasieratu, zenbat denbora daramagun jokatzen neurtzeko
+hegazkinX = 112; //Hegazkinaren posizio berria ezarri
 hegazkinY = 160;
-updateSpritePosition(0, hegazkinX, hegazkinY);
-spawnClouds();
+updateSpritePosition(0, hegazkinX, hegazkinY);//Hegazkina ikusgai jarri koordenatu berriekin
+spawnClouds(); //Hodeiak sortu
 int i;
+//Bizitza neurtzen duten spriteak sortu
 for (i = 0; i < 3; i++){
 erakutsiBihotza(i + 5, bihotzakX[i], bihotzakY);
 }
